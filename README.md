@@ -1,4 +1,5 @@
 # E-Commerce
+J'utlise ici la librairie Bootstrap pour la mise en forme de mon application
 Mon premier depot git sur une E-commerce avec authentification des utilisateurs avec symfony en utilisant les securites de symfony
 La creation de plusieurs autres controllers soit les produits et leurs categories et leur vues biensure c'est a dire des twigs qui sont creer avec lors de la creation avec les commandes de symfony...qui nous facilitent la tache
 Ensuite j'ai integrer le Bundle EasyAdmin pour faciliter l'ajout,la modification ou encore la suppression (CRUD) d'un produit .
