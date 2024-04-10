@@ -1,0 +1,75 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+    <h4>Commande N° {{ order.id }}</h4>
+    <span> Passée le : {{ order.createdAt|date('l d F Y H:i') }}</span> <br/>
+
+    {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}
+
+    <div class="row my-3">
+        <div class="col-md-6">
+        <strong>Adresse de livraison :</strong><br/>
+                {{ order.delivery|raw }}
+        </div>
+        <div class="col-md-6">
+            <strong>Transporteur</strong><br/>
+            {{ order.carriername }}
+        </div>
+    </div>
+
+    <strong>Contenu de la commande</strong>
+
+
+
+    <table class="table table-group-divider text-capitalize text-bg-info table-hover">
+        <thead>
+
+        <tr>
+            <th>Illustration</th>
+            <th>Nom du produit</th>
+            <th>Quantité</th>
+            <th>Prix unitaire H.T</th>
+            <th>TVA</th>
+            <th>Total T.T.C</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in order.orderDetails %}
+
+            <tr>
+                <td>
+                    <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="{{ product.productName }}">
+
+                </td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.productQuantity }}</td>
+                <td>{{ product.productPrice|price }}</td>
+                <td>{{ product.productTva }} %</td>
+                {% set coeff = 1 + (product.productTva / 100 ) %}
+
+                <td>{{ ((product.productPrice * coeff) * product.productQuantity ) | price}}</td>
+            </tr>
+
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>{{ order.carrierName }}</td>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td>{{ order.carrierPrice |price }}</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <div class=" btn btn-bg-dark btn-block  fst-italic font-weight-bold fs-6 ">
+        <strong>Total H.T :</strong> {{ (order.totalWt - order.totalTva) |price }} <br/>
+        <strong>Total TVA :</strong> {{ order.totalTva |price }} <br/>
+        <strong>Total T.T.C :</strong> {{ order.totalWt |price }} <br/>
+
+
+    </div>
+
+{% endblock %}
