@@ -3,6 +3,7 @@
 {% block main %}
     <h4>Commande N° {{ order.id }}</h4>
     <span> Passée le : {{ order.createdAt|date('l d F Y H:i') }}</span> <br/>
+    <span>Stripe Session ID : {{ order.stripeSessionId }}</span>
 
     {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}
 

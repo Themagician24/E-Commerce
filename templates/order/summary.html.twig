@@ -61,7 +61,7 @@
                         <span>{{ (totalWt + choices.carriers.price)|price }}</span>
 
                     </div>
-                    <a href="" class="btn btn-bd-primary w-100 mt-3">Payer</a>
+                    <a href="{{ path('app_payement', {'id_order': order.id}) }}" class="btn btn-bd-primary w-100 mt-3">Payer</a>
                 </div>
 
             </div>

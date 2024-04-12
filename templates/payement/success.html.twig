@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container d-flex justify-content-center align-items-center text-center vh-100">
+        <div>
+            <img src="/assets/img/cash-bag.png" alt="Confirmation de la commande">
+            <h1>Merci pour votre commande</h1>
+            <a href="{{ path('app_account_order', { 'id_order' : order.id }) }}" class="btn btn-success">Consulter ma commande</a>
+        </div>
+
+    </div>
+
+
+{% endblock %}
