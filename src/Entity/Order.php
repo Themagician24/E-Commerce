@@ -23,7 +23,9 @@ class Order
     /*
     *1: En attente de payement
      * 2: Paiement validé
-     * 3: Expedié
+     * 3:En cours de preparation
+     * 4: Expediée
+     * 5:Annulée
      */
 
     #[ORM\Column(length: 255)]

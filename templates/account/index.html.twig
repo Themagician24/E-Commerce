@@ -9,6 +9,52 @@
                 {% include 'account/menu.html.twig' %}
             </div>
             <div class="col-md-9">
+               
+                <div class="cardt">
+    <div class="align">
+        <span class="red"></span>
+        <span class="yellow"></span>
+        <span class="green"></span>
+    </div>
+
+    <h1>INFOS</h1>
+    <p>A Propos de </p>
+ 
+                 {# <h4 class="bg-body-secondary my-0">Mes dernières commandes</h4>
+                {% if orders|length == 0 %}
+                    <div class="alert alert-danger">
+                        Vous n'avez passé aucune commande pour le moment!
+                    </div>
+                {% else %}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nº</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col">Total T.T.C</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                                <td>{{ include('admin/state.html.twig', {field : { 'value' : order.state } } ) }}</td>
+                                <td>{{ order.totalWt|price }}</td>
+                                <td><a href="{{ path('app_account_order', { 'id_order' : order.id }) }}">Voir</a></td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}  #}
+   
+</div>
+
+
+        <div class="commande">
                 <h4 class="bg-body-secondary my-0">Mes dernières commandes</h4>
                 {% if orders|length == 0 %}
                     <div class="alert alert-danger">
@@ -38,7 +84,8 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                {% endif %} {# Ajoutez le bloc endif correspondant #}
+                {% endif %} 
+                </div>
             </div>
         </div>
     </div>

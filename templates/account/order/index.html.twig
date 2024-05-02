@@ -10,6 +10,8 @@
             </div>
             <div class="col-md-9">
                 <small><a href="{{ path('app_account') }}" class="btn btn-danger btn-sm my-3 ">Retour</a> </small><br/>
+                <small><a target="_blank" href="{{ path('app_invoice_customer', { id_order : order.id }) }}" class="btn btn-danger btn-sm my-3 ">Télecharger ma Facture</a> </small><br/>
+
                 <h4 class="bg-body-secondary my-0">Ma commande Nº{{ order.id}} </h4><br/>
 
                 {% block main %}

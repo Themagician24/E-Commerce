@@ -13,7 +13,34 @@
                 <h1>{{ product.name }}</h1>
                 <span class="d-block mb-3">{{ product.pricewt|price }} </span>
                 {{ product.description |raw }}
-                <a href="{{ path('app_cart_add', { id : product.id} ) }}" class="btn btn-dark w-100 mt-1">Ajouter au Panier</a>
+          <div class="d-flex align-items-center justify-content-space-between my-3">
+
+              <a href="{{ path('app_cart_add', { id : product.id} ) }}" class="btn btn-dark w-100">Ajouter au Panier</a>
+
+              {% if app.user %}
+                  {% if product in app.user.wishlists %}
+
+              <a class=" wishlist-icon  wishlist-icon-active " href="{{ path('app_account_wishlist_remove', { id : product.id } ) }}" style="margin-left: 20px;">
+                  <i data-feather="heart"></i>
+              </a>
+                  {% else %}
+                      <a class=" wishlist-icon" href="{{ path('app_account_wishlist_add', { id : product.id } ) }}" style="margin-left: 20px;">
+                          <i data-feather="heart"></i>
+                      </a>
+                  {% endif %}
+              {% else %}
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 20px;">
+                  <i data-feather="heart"></i>
+              </a>
+              {% endif %}
+
+          </div>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                     Pour utiliser les avantages de la Wishlist, <a href="{{ path('app_login') }}">Connectez-vous</a>
+                   <a href="   {{ path('app_register')}}">ou céez votre compte client.</a>
+                    </div>
+                </div>
             </div>
         </div>
 

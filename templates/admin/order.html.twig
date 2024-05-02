@@ -1,56 +1,64 @@
 {% extends '@!EasyAdmin/layout.html.twig' %}
 
 {% block main %}
-    <h4>Commande N° {{ order.id }}</h4>
-    <span> Passée le : {{ order.createdAt|date('l d F Y H:i') }}</span> <br/>
-    <span>Stripe Session ID : {{ order.stripeSessionId }}</span>
 
+    <h2>Agir sur la commande</h2>
+    {% if order.state != 1 %}
+        <a href="{{current_url}}&state=3" class="{% if order.state == 3 %}d-none{% endif %} btn btn-light">Commande en cours de préparation</a>
+        <a href="{{current_url}}&state=4" class="{% if order.state == 4 %}d-none{% endif %} btn btn-light">Commande expédiée</a>
+        <a href="{{current_url}}&state=5" class="{% if order.state == 5 %}d-none{% endif %} btn btn-light">Commande annulée</a>
+    {% else %}
+        <p>Vous ne pouvez pas agir sur une commande qui n'est pas encore payée.</p>
+    {% endif %}
+
+    <hr>
+    <a target="_blank" href="{{ path('app_invoice_admin', { id_order : order.id }) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a>
+    <h3 class="mt-2">Commande n°{{ order.id }}</h3>
     {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}
+    <br/>
+    <br/>
+    <span>Passée le : {{ order.createdAt|date('d/m/Y') }}</span><br/>
+    <span>Stripe Session Id : {{ order.stripeSessionId }}</span>
 
-    <div class="row my-3">
+
+    <div class="row my-4">
         <div class="col-md-6">
-        <strong>Adresse de livraison :</strong><br/>
-                {{ order.delivery|raw }}
+            <strong>Adresse de livraison :</strong><br/>
+            {{ order.delivery|raw }}
         </div>
         <div class="col-md-6">
             <strong>Transporteur</strong><br/>
-            {{ order.carriername }}
+            {{ order.carrierName }}
         </div>
     </div>
 
-    <strong>Contenu de la commande</strong>
+    <strong>Contenu de la commande :</strong><br/>
 
-
-
-    <table class="table table-group-divider text-capitalize text-bg-info table-hover">
+    <table class="table">
         <thead>
-
         <tr>
-            <th>Illustration</th>
-            <th>Nom du produit</th>
-            <th>Quantité</th>
-            <th>Prix unitaire H.T</th>
-            <th>TVA</th>
-            <th>Total T.T.C</th>
+            <th scope="col">Illustration</th>
+            <th scope="col">Nom du produit</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix unitaire H.T</th>
+            <th scope="col">TVA</th>
+            <th scope="col">Total T.T.C</th>
         </tr>
         </thead>
         <tbody>
         {% for product in order.orderDetails %}
-
             <tr>
                 <td>
-                    <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="{{ product.productName }}">
-
+                    <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="">
                 </td>
                 <td>{{ product.productName }}</td>
                 <td>{{ product.productQuantity }}</td>
                 <td>{{ product.productPrice|price }}</td>
-                <td>{{ product.productTva }} %</td>
-                {% set coeff = 1 + (product.productTva / 100 ) %}
+                <td>{{ product.productTva }}%</td>
+                {% set coeff = 1 + (product.productTva / 100) %}
 
-                <td>{{ ((product.productPrice * coeff) * product.productQuantity ) | price}}</td>
+                <td>{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
             </tr>
-
         {% endfor %}
         <tr>
             <td></td>
@@ -58,19 +66,17 @@
             <td>1</td>
             <td></td>
             <td></td>
-            <td>{{ order.carrierPrice |price }}</td>
+            <td>{{ order.carrierPrice|price }}</td>
         </tr>
-
-
         </tbody>
     </table>
 
-    <div class=" btn btn-bg-dark btn-block  fst-italic font-weight-bold fs-6 ">
-        <strong>Total H.T :</strong> {{ (order.totalWt - order.totalTva) |price }} <br/>
-        <strong>Total TVA :</strong> {{ order.totalTva |price }} <br/>
-        <strong>Total T.T.C :</strong> {{ order.totalWt |price }} <br/>
-
-
+    <div class="text-right fs-5">
+        <strong>Total H.T : </strong> {{ (order.totalWt - order.totalTva)|price }}<br/>
+        <strong>Total TVA : </strong> {{ order.totalTva|price }}<br/>
+        <strong>Total T.T.C : </strong> {{ order.totalWt|price }}
     </div>
+
+
 
 {% endblock %}

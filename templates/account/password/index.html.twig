@@ -1,21 +1,15 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
+<div class="container my-5">
+    <h1>Mots de passe oublié</h1>
 
-    <div class="container my-5">
-        <h1> Espace membre 💻 </h1>
+    {{ form(modifyPwd) }}
 
+    <br>
 
+  Vous avez deja un compte?  <a href="{{ path('app_login') }}"> Connectez-vous </a>
 
-        <div class="row">
-            <div class="col-md-3">
-                {% include 'account/menu.html.twig' %}
-            </div>
-            <div class="col-md-9 text-bg-light">
-                <h5 class="bg-dark-subtle">Modification de mon mot de passe</h5>
-                {{ form(modifyPwd) }}
-            </div>
-        </div>
-
-    </div>
+</div>
 
 {% endblock %}
