@@ -27,7 +27,7 @@ class LoginSubscriber implements EventSubscriberInterface
             
             $user = $this->security->getUser();
            
-           $user->setLastLoginAt(new DateTime());
+           $user->setLastLoginAt(new \DateTime());
             $this->em->flush();
         }
 

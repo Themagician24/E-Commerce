@@ -18,8 +18,16 @@
                             <span class="inn6">Prix unitaire : {{ product.object.pricewt|price }}</span>
                         </div>
                         <div class="col-md-2 text-right text-decoration-none">
-                            <a href="{{ path('app_cart_decrease', { id : product.object.id } ) }}">-</a> <span class="badge text-bg-secondary">x{{ product.qty }}</span> <a href="{{ path('app_cart_add', { id : product.object.id } ) }}">+</a>
-                        </div>
+                            <a href="{{ path('app_cart_decrease', { id : product.object.id } ) }}">
+                <button type="button" class="button">
+                <span class="button__text">Remove</span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y1="12" x2="19" y2="12" x1="5"></line></svg></span>
+                </button></a> <span class="badge text-bg-secondary">x{{ product.qty }}</span> <a href="{{ path('app_cart_add', { id : product.object.id } ) }}">
+                <button type="button" class="button">
+                <span class="button__text">Add </span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+                </button></a>
+                                                        </div>
                         <div class="col-md-2">
                             <strong>{{ (product.qty * product.object.pricewt)|price }}</strong>
                         </div>
