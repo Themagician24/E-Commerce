@@ -1,26 +1,39 @@
-{% extends '@!EasyAdmin/layout.html.twig' %}
+{% extends '@EasyAdmin/layout.html.twig' %}
 
 {% block main %}
 
+    <!-- Titre de la section -->
     <h2>Agir sur la commande</h2>
-    {% if order.state != 1 %}
+
+    <!-- Boutons conditionnels pour changer l'état de la commande -->
+    {% if order.state!= 1 %}
         <a href="{{current_url}}&state=3" class="{% if order.state == 3 %}d-none{% endif %} btn btn-light">Commande en cours de préparation</a>
         <a href="{{current_url}}&state=4" class="{% if order.state == 4 %}d-none{% endif %} btn btn-light">Commande expédiée</a>
         <a href="{{current_url}}&state=5" class="{% if order.state == 5 %}d-none{% endif %} btn btn-light">Commande annulée</a>
     {% else %}
+        <!-- Message indiquant que l'utilisateur ne peut pas agir sur une commande non payée -->
         <p>Vous ne pouvez pas agir sur une commande qui n'est pas encore payée.</p>
     {% endif %}
 
+    <!-- Séparation avec une ligne horizontale -->
     <hr>
+
+    <!-- Lien pour voir/imprimer la facture -->
     <a target="_blank" href="{{ path('app_invoice_admin', { id_order : order.id }) }}" class="btn btn-light btn-sm">Voir/Imprimer la facture</a>
+
+    <!-- Affichage de l'ID de la commande -->
     <h3 class="mt-2">Commande n°{{ order.id }}</h3>
+
+    <!-- Inclusion de la vue pour afficher l'état de la commande -->
     {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}
-    <br/>
-    <br/>
+
+    <!-- Affichage de la date de création de la commande -->
     <span>Passée le : {{ order.createdAt|date('d/m/Y') }}</span><br/>
+
+    <!-- Affichage de l'ID de session Stripe -->
     <span>Stripe Session Id : {{ order.stripeSessionId }}</span>
 
-
+    <!-- Affichage de l'adresse de livraison et du transporteur -->
     <div class="row my-4">
         <div class="col-md-6">
             <strong>Adresse de livraison :</strong><br/>
@@ -32,8 +45,10 @@
         </div>
     </div>
 
+    <!-- Affichage du contenu de la commande -->
     <strong>Contenu de la commande :</strong><br/>
 
+    <!-- Tableau pour afficher les détails de chaque produit dans la commande -->
     <table class="table">
         <thead>
         <tr>
@@ -49,17 +64,19 @@
         {% for product in order.orderDetails %}
             <tr>
                 <td>
+                    <!-- Affichage de l'image du produit -->
                     <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="">
                 </td>
                 <td>{{ product.productName }}</td>
                 <td>{{ product.productQuantity }}</td>
                 <td>{{ product.productPrice|price }}</td>
                 <td>{{ product.productTva }}%</td>
+                <!-- Calcul du total TTC pour chaque produit -->
                 {% set coeff = 1 + (product.productTva / 100) %}
-
                 <td>{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
             </tr>
         {% endfor %}
+        <!-- Ligne pour le transporteur -->
         <tr>
             <td></td>
             <td>{{ order.carrierName }}</td>
@@ -71,12 +88,11 @@
         </tbody>
     </table>
 
+    <!-- Affichage des totaux HT, TVA et TTC -->
     <div class="text-right fs-5">
         <strong>Total H.T : </strong> {{ (order.totalWt - order.totalTva)|price }}<br/>
         <strong>Total TVA : </strong> {{ order.totalTva|price }}<br/>
         <strong>Total T.T.C : </strong> {{ order.totalWt|price }}
     </div>
-
-
 
 {% endblock %}

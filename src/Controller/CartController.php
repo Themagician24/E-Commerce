@@ -65,7 +65,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    // Route pour ajouter un produit au panier
+    // Route pour supprimer un produit au panier
     #[Route('/cart/remove', name: 'app_cart_remove')]
     public function remove( Cart $cart): Response
     {

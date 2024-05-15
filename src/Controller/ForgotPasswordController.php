@@ -99,7 +99,8 @@ class ForgotPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user->setToken(null);
-            $user->setTokenExpireAt(null);
+            $user->setTokenExpireAt
+            (null);
 
             // Traitement à effectuer
             $this->em->flush();

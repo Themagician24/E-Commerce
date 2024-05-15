@@ -1,42 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <!-- Container principal avec une marge supérieure de 5 -->
     <div class="container my-5">
+
+        <!-- Titre de la page -->
         <h1> Espace membre 💻 </h1>
 
+        <!-- Structure de la page avec une barre latérale pour le menu et un espace principal pour le contenu -->
         <div class="row">
             <div class="col-md-3">
+                <!-- Inclusion du menu de l'espace membre -->
                 {% include 'account/menu.html.twig' %}
             </div>
+
             <div class="col-md-9">
+                <!-- Boutons pour retourner à la page d'accueil ou télécharger la facture -->
                 <small><a href="{{ path('app_account') }}" class="btn btn-danger btn-sm my-3 ">Retour</a> </small><br/>
                 <small><a target="_blank" href="{{ path('app_invoice_customer', { id_order : order.id }) }}" class="btn btn-danger btn-sm my-3 ">Télecharger ma Facture</a> </small><br/>
 
+                <!-- Titre de la commande -->
                 <h4 class="bg-body-secondary my-0">Ma commande Nº{{ order.id}} </h4><br/>
 
+                <!-- Bloc principal pour le contenu de la commande -->
                 {% block main %}
+                    <!-- Date de passage de la commande -->
                     <span> Passée le : {{ order.createdAt|date('l d F Y H:i') }}</span> <br/>
 
+                    <!-- Affichage de l'état de la commande -->
                     {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}
 
+                    <!-- Informations sur l'adresse de livraison et le transporteur -->
                     <div class="row my-3">
                         <div class="col-md-6">
                             <strong>Adresse de livraison :</strong><br/>
                             {{ order.delivery|raw }}
                         </div>
+                        
                         <div class="col-md-6">
                             <strong>Transporteur</strong><br/>
                             {{ order.carriername }}
                         </div>
                     </div>
 
-                    <strong>Contenu de la commande</strong>
-
-
-
+                    <!-- Tableau pour afficher les détails de chaque produit dans la commande -->
                     <table class="table table-group-divider text-capitalize text-bg-info table-hover">
                         <thead>
-
                         <tr>
                             <th>Illustration</th>
                             <th>Nom du produit</th>
@@ -48,22 +58,20 @@
                         </thead>
                         <tbody>
                         {% for product in order.orderDetails %}
-
                             <tr>
                                 <td>
                                     <img src="/uploads/{{ product.productIllustration }}" width="100px" alt="{{ product.productName }}">
-
                                 </td>
                                 <td>{{ product.productName }}</td>
                                 <td>{{ product.productQuantity }}</td>
                                 <td>{{ product.productPrice|price }}</td>
                                 <td>{{ product.productTva }} %</td>
+                                <!-- Calcul du total TTC pour chaque produit -->
                                 {% set coeff = 1 + (product.productTva / 100 ) %}
-
                                 <td>{{ ((product.productPrice * coeff) * product.productQuantity ) | price}}</td>
                             </tr>
-
                         {% endfor %}
+                        <!-- Ligne pour le transporteur -->
                         <tr>
                             <td></td>
                             <td>{{ order.carrierName }}</td>
@@ -72,21 +80,16 @@
                             <td></td>
                             <td>{{ order.carrierPrice |price }}</td>
                         </tr>
-
-
                         </tbody>
                     </table>
 
+                    <!-- Affichage des totaux HT, TVA et TTC -->
                     <div class=" btn btn-bg-dark btn-block  fst-italic font-weight-bold fs-6 ">
                         <strong>Total H.T :</strong> {{ (order.totalWt - order.totalTva) |price }} <br/>
                         <strong>Total TVA :</strong> {{ order.totalTva |price }} <br/>
                         <strong>Total T.T.C :</strong> {{ order.totalWt |price }} <br/>
-
-
                     </div>
-
                 {% endblock %}
-
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+// Importation des classes nécessaires pour la création du formulaire
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
@@ -18,14 +19,17 @@ class RegisterUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Construction du formulaire
         $builder
-            ->add('email',EmailType::class, [
+            // Ajout du champ email avec des options spécifiques
+            ->add('email', EmailType::class, [
                 'label' => ' Email ',
                 'attr' => [
                     'placeholder' => "Indiquez votre adresse email"
                 ]
             ])
         
+            // Ajout du champ mot de passe avec des contraintes de longueur et des options spécifiques
             ->add('plainPassword', RepeatedType::class, [
                     'type' => PasswordType::class,
                     'constraints' => [
@@ -52,6 +56,7 @@ class RegisterUserType extends AbstractType
                 ])
 
             
+            // Ajout du champ prénom avec des contraintes de longueur et des options spécifiques
             ->add('firstname', TextType::class, [
                 'label' => "Prenom",
                 'constraints' => [
@@ -64,6 +69,7 @@ class RegisterUserType extends AbstractType
                     'placeholder' => "Indiquez votre Prenom"
                 ],
             ])
+            // Ajout du champ nom avec des contraintes de longueur et des options spécifiques
             ->add('lastname', TextType::class, [
                 'label' => "Nom",
                 'constraints' => [
@@ -76,7 +82,8 @@ class RegisterUserType extends AbstractType
                     'placeholder' => "Indiquez votre Nom"
                 ]
             ])
-            ->add('submit',SubmitType::class,[
+            // Ajout du bouton de soumission avec des options spécifiques
+            ->add('submit', SubmitType::class,[
                 'label' => 'Validez',
                 'attr' => [
                     'class' => 'btn btn-success',
@@ -87,6 +94,7 @@ class RegisterUserType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        // Configuration des options par défaut pour le formulaire
         $resolver->setDefaults([
             'contraints' => [
                 new UniqueEntity([

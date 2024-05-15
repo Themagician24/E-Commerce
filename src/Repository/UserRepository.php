@@ -10,57 +10,40 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
- * @extends ServiceEntityRepository<User>
-* @implements PasswordUpgraderInterface<User>
+ * Repository pour l'entité User.
  *
- * @method User|null find($id, $lockMode = null, $lockVersion = null)
- * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<User> Déclare que ce repository gère l'entité User.
+ * @implements PasswordUpgraderInterface<User> Implémente l'interface PasswordUpgraderInterface pour mettre à jour les mots de passe.
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
+        // Appelle le constructeur de la classe parente avec le registre de gestionnaire d'entités et l'entité gérée.
         parent::__construct($registry, User::class);
     }
 
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     * Méthode pour mettre à jour le mot de passe de l'utilisateur.
+     *
+     * @param PasswordAuthenticatedUserInterface $user L'utilisateur dont le mot de passe doit être mis à jour.
+     * @param string $newHashedPassword Le nouveau mot de passe hashé.
+     *
+     * @throws UnsupportedUserException Si l'utilisateur n'est pas une instance de User.
      */
+    
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
+        // Vérifie si l'utilisateur est une instance de User, sinon lance une exception.
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
+        // Met à jour le mot de passe de l'utilisateur avec le nouveau mot de passe hashé.
         $user->setPassword($newHashedPassword);
+
+        // Persiste les changements dans la base de données.
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
