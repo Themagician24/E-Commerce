@@ -35,15 +35,33 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ path('app_home') }}">BuyAndSalam</a>
+            <nav class="dropdownmenu">
+  <ul>
+    <li><a href="{{ path('app_home') }}">Home</a></li>
+    <li><a href="">About Me</a></li>
+    <li><a href="#">Produits 100% africains</a>
+      <ul id="submenu">
+        <li><a href="">Afrique de l'Ouest</a></li>
+        <li><a href="">Afrique du Sud</a></li>
+        <li><a href="">Afrique de l'Est</a></li>
+      </ul>
+    </li>
+    <li><a href="">Tous les Produits</a>
+    
+    
+    </li>
+    <li><a href="">News</a></li>
+    <li><a href="">Contact Us</a></li>
+
+  </ul>
+</nav>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
-                    </li>
+                   
                     {% for category in allCategories %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_category', { slug : category.slug } ) }}">{{ category.name }}</a>
