@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>La Boutique Africaine - 100% Made in Africa</title>
-    <meta name="description" content="La boutique spécialisée dans la fabrication Made In Africa">
+    <title>BuyAndSelam - 100% Made in Africa</title>
+    <meta name="description" content="La boutique spécialisée dans la fabrication Made In World">
 
         <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link
@@ -14,6 +14,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
 
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -31,6 +32,8 @@
 </head>
 <body>
 
+
+
 <header data-bs-theme="dark">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
@@ -38,20 +41,34 @@
             <nav class="dropdownmenu">
   <ul>
     <li><a href="{{ path('app_home') }}">Home</a></li>
-    <li><a href="">About Me</a></li>
+ 
     <li><a href="#">Produits 100% africains</a>
       <ul id="submenu">
-        <li><a href="">Afrique de l'Ouest</a></li>
+        <li><a href="https://www.google.com/search?client=firefox-b-d&sca_esv=323b9f97f7d38a56&sxsrf=ADLYWIJlt7g4pkGqADcz9tVAQ-6kc3BqEw:1716017998058&q=mode+afrique+de+l%27ouest&uds=ADvngMipajioxIlpJYA27QdZAqwgG1miVjJvV2LnlXuvD42r3D4e1UNLSC859yCKR3SorR-aemjwdSsKv6boRaAtpRBZp-N0qPTP2R4fNlGjadBnFVmcacF067jufRvELnfUEbLIojFkfC9WXyDInNdso5dWgPI1jUJX3vXESBHEc0Whin_Ihd1taprdjsLqVIdE4Nsnttjwadq7UsMlfSRsdRT029plk3UhsmHF-shs4akGa9ERtfo-scBXweDDzJh9qWGTJmGXuZv9loeR5sOooHLjwH9FX7HjVwYuBkOk9ODAD7NrpaA&udm=2&prmd=ivnbz&sa=X&ved=2ahUKEwj_886Z2ZaGAxUWcKQEHVaAAdoQtKgLegQIDRAB&biw=1920&bih=955&dpr=1">Afrique de l'Ouest</a></li>
         <li><a href="">Afrique du Sud</a></li>
         <li><a href="">Afrique de l'Est</a></li>
       </ul>
     </li>
     <li><a href="">Tous les Produits</a>
-    
+        <ul id="submenu">
+            <li>
+                <ol class="list-unstyled">
+                    {% for category in allCategories %}
+                        <li>
+                            <a class="nav-link" href="{{ path('app_category', { slug : category.slug } ) }}">{{ category.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+
+        </ul>
+
     
     </li>
-    <li><a href="">News</a></li>
-    <li><a href="">Contact Us</a></li>
+    <li><a href="">News</a>
+      
+    </li>
+  
 
   </ul>
 </nav>
@@ -61,13 +78,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto">
-                   
-                    {% for category in allCategories %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_category', { slug : category.slug } ) }}">{{ category.name }}</a>
-                        </li>
-                    {% endfor %}
+                    
+                    
                 </ul>
+                
+            
                 <div class="speed-menu">
                     {% if app.user %}
                         <a href="{{ path('app_account') }}"><i data-feather="user"></i> {{ app.user.firstname }}</a>
@@ -99,9 +114,12 @@
         {% endfor %}
     </div>
 
+    
+
     {% block body %}{% endblock %}
 
 
+    
 
 
     <!-- menu bottom -->

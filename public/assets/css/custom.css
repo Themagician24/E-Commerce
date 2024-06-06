@@ -161,16 +161,17 @@
   width: 430px;
   height: 314px;
   backdrop-filter: blur(7px);
-  background-color: rgb(199, 228, 13);
+  background-color: rgb(0, 2, 13);
   border-radius: 26px;
-  box-shadow: 35px 35px 68px 0px rgb(225, 7, 98),
-    inset -8px -8px 16px 0px rgb(26, 228, 13),
-    inset 0px 11px 28px 0px rgb(255, 255, 255);
+  box-shadow: 35px 35px 68px 0px rgb(0, 128, 0),
+    inset -8px -8px 16px 0px rgb(255, 0, 0),
+    inset 0px 11px 28px 0px rgb(255, 255, 0);
   transition: all 0.3s;
   cursor: pointer;
     font-family: 'lobster', cursive;
   align-content: center;
     font-size: 25px;
+    
 
 
 
@@ -1027,19 +1028,27 @@ form.search button:hover {
  * 03. BRANDS
  * --------------------------- */
 
+/* Pour le conteneur des marques */
 .brands .wrapper {
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 4em 0;
-
-
+    background-color: #FFF; /* Fond noir */
 }
 
+/* Pour les images des marques */
 .brands .item img {
-    opacity: .25;
-    transition: opacity .3s;
-
+    opacity: 0.75; /* Visibilité des images sur fond noir */
+    transition: opacity 0.3s, filter 0.3s;
+    filter: brightness(0.7); /* Réduire légèrement la luminosité pour l'effet atténué */
 }
+
+/* Effet de survol */
+.brands .item img:hover {
+    opacity: 2; /* Pleine opacité */
+    filter: brightness(1.5); /* Augmente la luminosité pour un effet de brillance */
+}
+
 
 
 /* ----------------------------
@@ -3663,7 +3672,7 @@ input[type="range"]::-webkit-slider-thumb {
 	width:auto;
 }
 .dropdownmenu a {
-	background: #30A6E6;
+	background: linear-gradient(to bottom, #00FF00 0%, #FF0000 50%, #FFFF00 100%);
 	color: #FFFFFF;
 	display: block;
 	font: bold 12px/20px sans-serif;
@@ -3702,6 +3711,19 @@ li:hover ul#submenu {
 #submenu a {
 	background-color:#000000;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
